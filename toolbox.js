@@ -77,7 +77,8 @@ Number.prototype.leftShift = function (shift_index = 0) {
 
 String.prototype.shorten = function (max_length = 32) {
 	let str = this
-	if (str.length > max_length) str = ''.concat(str.substring(0, max_length / 2), '...', str.substring(-(max_length / 2)))
+	if (str.length > max_length)
+		str = ''.concat(str.substring(0, max_length / 2), '...', str.substring(-(max_length / 2)))
 	return str
 }
 
@@ -121,4 +122,74 @@ Array.prototype.last = function (negative_index = 0) {
 
 Array.prototype.getUniqueKeys = function (filter_key) {
 	return [...new Set(this.map((key) => key[filter_key]))]
+}
+
+Array.prototype.append = function (value) {
+	if (value instanceof Object) {
+		if (value instanceof Array) {
+			value.forEach((key, index) => {
+				this.push(key)
+			})
+			return value
+		}
+	}
+	this.push(value)
+	return value
+}
+/* 
+Array.prototype.prepend = function (pValue) {
+	const old = this
+	old.forEach((value, index) => {
+		this[index + 1] = value
+	})
+	this[0] = pValue
+} 
+ */
+/* Array.prototype.prepend = function (newValue) {
+	const oldThis = this
+	const _os = Math.max(newValue.length - 1, 1)
+	const offset = newValue.length ? _os : 1
+	
+	if (newValue instanceof Object) {			// 	[] and {}
+		if (newValue instanceof Array) {		// 	only []
+			newValue.forEach((key, index) => {
+				this[index] = key
+				console.log(`Setting -> ${index}: ${key}`)
+			})
+		} else {
+			this
+		}
+	}	else {								//	Neither
+
+		// oldThis	-> [ 0, 1, 2, 3, 4, 5, 6 ]
+		// this 	-> [ 0, 0, 1, 2, 3, 4, 5, 6 ]
+		oldThis.forEach((key,index)=>{
+			this[index+1] = key
+		})
+		this[0]=newValue
+	}
+	console.log(this)
+	return newValue
+} */
+
+Array.prototype.remove = function (rValue) {
+	var has_key = false
+	var removed_index = -1
+	const old = this
+	old.forEach((value, index) => {
+		if (removed_index >= 0) {
+			this[index] = old[index + 1]
+		} else {
+			if (JSON.stringify(rValue) == JSON.stringify(value)) {
+				removed_index = index
+				this[index] = old[index + 1]
+				has_key = true
+			}
+		}
+	})
+
+	delete this[old.length - 1]
+	this.flat()
+	// console.log(this.flat())
+	return has_key
 }
