@@ -74,7 +74,22 @@ Number.prototype.leftShift = function (shift_index = 0) {
     ⎢   Functions for strings   ⎥
     ⎣                           ⎦
 */
+String.prototype.upperFirst = function () {
+	return String(this.charAt(0).toUpperCase() + this.substr(1))
+}
 
+String.prototype.containedInArray = function (_arr = ['']) {
+	var _return = false
+	for (const v of _arr) {
+		// console.log(`${v.length}: Testing if "${v}" is in "${this}" -> ` + (this.includes(v) ? '✔️' : '❌'))
+		if (v.length)
+			if (this.includes(v)) {
+				_return = true
+				break
+			}
+	}
+	return _return
+}
 String.prototype.shorten = function (max_length = 32) {
 	let str = this
 	if (str.length > max_length)
