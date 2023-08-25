@@ -134,6 +134,9 @@ Array.prototype.last = function (negative_index = 0) {
 	const last_index = this.length - 1
 	return this[last_index - negative_index]
 }
+Array.prototype.lastIndex = function () {
+	return this.length - 1
+}
 
 Array.prototype.getUniqueKeys = function (filter_key) {
 	return [...new Set(this.map((key) => key[filter_key]))]
