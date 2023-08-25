@@ -42,6 +42,37 @@ function cookieExists(_name) {
     ⎢   Functions for numbers   ⎥
     ⎣                           ⎦
 */
+Number.prototype.isNegative = function () {
+	return Boolean(this < 0)
+}
+Number.prototype.isPositive = function () {
+	return Boolean(this >= 0)
+}
+
+Number.prototype.formatMetric = function (space=false,suffix='') {
+	var exp = 0
+	var n = this
+	const prefixes = [
+		['','m', 'µ', 'n', 'p', 'f', 'a'],
+		['','k', 'M', 'G', 'T', 'P', 'E']
+	]
+	if (this > 0) {
+		const factor = 1e3
+		while (n >= 1e3) {
+			n /= factor
+			exp++
+		}
+	}
+	if (this < 0) {
+		const factor = 1e-3
+		while (n >= factor) {
+			n /= factor
+			exp++
+		}
+	}
+	return `${n.toFixed(2)}${space?' ':''}${prefixes[ this.isPositive()?1:0 ][exp]}${suffix.length?suffix:''}`.toString()	
+}
+
 Number.prototype.formatDataSize = function (binary_bytes = true) {
 	var exp = 0
 	var n = this
