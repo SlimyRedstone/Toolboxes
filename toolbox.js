@@ -157,7 +157,9 @@ String.prototype.hexToNumber = function () {
     ⎢   Functions for arrays    ⎥
     ⎣                           ⎦
 */
-
+Object.prototype.getKey = function (key, defaultValue=undefined) {
+	return Object.keys(this).includes(key) ? this[key] : defaultValue
+}
 Array.prototype.hasKey = function (key) {
 	return Boolean(Object.hasOwnProperty.call(this, key))
 }
